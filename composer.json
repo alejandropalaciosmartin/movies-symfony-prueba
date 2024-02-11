@@ -79,10 +79,12 @@
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "Symfony\\Component\\Filesystem\\Filesystem::dumpFile('assets/controllers.json', '{\"controllers\": {}, \"entrypoints\": []}')"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "Symfony\\Component\\Filesystem\\Filesystem::dumpFile('assets/controllers.json', '{\"controllers\": {}, \"entrypoints\": []}')"
         ]
     },
     "conflict": {

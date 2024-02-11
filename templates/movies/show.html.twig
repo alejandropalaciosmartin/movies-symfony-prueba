@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie: {{ movie.title }}{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden relative">
+            <div class="flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2">
+                    <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="w-full h-full object-cover">
+                </div>
+                <div class="w-full md:w-1/2 p4">
+                    <div class="flex flex-col justify-between h-full">
+                        <div>
+                            <h2 class="text-2xl font-semibold text-gray-800 leading-tight bg-gray-200 p-2 gap-2">
+                                {{ movie.title }}
+                            </h2>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                {% include 'partials/movies/facts.html.twig' with {'movie': movie} %}
+                            </div>
+                            <p class="text-gray-700 mt-4 text-justify">
+                                {{ movie.description }}
+                            </p>
+                        </div>
+
+                        <div class="flex justify-end mt-4">
+                            <a href="#" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-l">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ path('app_movies') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r">
+                                <i class="fas fa-list"></i> List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
