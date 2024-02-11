@@ -1,0 +1,17 @@
+<div class="facts">
+    <span class="release text-sm text-grey-600 bg-gray-200 p-2">
+        <i class="fas fa-calendar-alt"></i> {{ movie.releaseDate|date('d/m/Y') }}
+    </span>
+    <span class="runtime text-sm text-grey-600 bg-gray-200 p-2">
+        <i class="fas fa-clock"></i> {{ movie.runtime }} min
+    </span>
+    <span class="budget text-sm text-grey-600 bg-gray-200 p-2">
+        <i class="fas fa-dollar-sign"></i> {{ movie.budget|number_format(0,',','.') }}
+    </span>
+    <span class="country text-sm text-grey-600 bg-gray-200 p-2">
+        <i class="fas fa-globe"></i> {{ movie.country.name }}
+    </span>
+    <span class="genre text-sm text-grey-600 bg-gray-200 p-2">
+        <i class="fas fa-film"></i> {{ movie.genre.name }}
+    </span>
+</div>
