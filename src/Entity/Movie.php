@@ -110,7 +110,7 @@ class Movie
         return $this->release_date;
     }
 
-    public function setReleaseDate(\DateTimeInterface $release_date): static
+    public function setReleaseDate(?\DateTimeInterface $release_date): static
     {
         $this->release_date = $release_date;
 
