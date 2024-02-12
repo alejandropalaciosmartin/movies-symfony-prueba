@@ -37,7 +37,6 @@
         "symfony/string": "6.4.*",
         "symfony/translation": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
-        "symfony/ux-turbo": "^2.14",
         "symfony/validator": "6.4.*",
         "symfony/web-link": "6.4.*",
         "symfony/webpack-encore-bundle": "^2.1",
@@ -79,12 +78,10 @@
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "Symfony\\Component\\Filesystem\\Filesystem::dumpFile('assets/controllers.json', '{\"controllers\": {}, \"entrypoints\": []}')"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "Symfony\\Component\\Filesystem\\Filesystem::dumpFile('assets/controllers.json', '{\"controllers\": {}, \"entrypoints\": []}')"
+            "@auto-scripts"
         ]
     },
     "conflict": {
