@@ -86,4 +86,18 @@ class MoviesController extends AbstractController
         ]);
     }
 
+    #[Route('/movies/{id}/delete', name: 'app_movie_delete', methods: ['GET'])]
+    public function delete(int $id): Response
+    {
+        $movie = $this->entityManager->getRepository(Movie::class)->find($id);
+        if(!$movie) {
+            throw $this->createNotFoundException('The movie does not exist');
+        }
+
+        $this->entityManager->remove($movie);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('app_movies');
+    }
+
 }
