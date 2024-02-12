@@ -1,0 +1,128 @@
+- Crear un nuevo proyecto -> symfony new --webapp {nombre_del_proyecto}
+     
+--- LANZAR WEB AL NAVEGADOR ---
+	- Comando para lanzar web -> symfony serve -d 
+	- Comando para abrir directamente la web en el navegador -> symfony open:local
+	- Comando para parar el servidor -> symfony server:stop
+
+--- CREAR CONTROLADORES ---
+	- Comando para crear controlador -> symfony console make:controller
+
+--- CREAR BASE DE DATOS ---
+	- Ir al archivo .env en la raiz del proyecto, comentar la linea que pone DATABASE... y poner la siguiente linea SIN COMENTAR DATABASE_URL=mysql://root:@127.0.0.1:3306/{nombreDeLaBaseDeDatos}?serverVersion=mariadb-10.4.11
+	- En ese mismo archivo, poner donde pone 'app:!ChangeMe!' poner root: ya que nuestro usuario de mysql es root y no tiene contraseña, y donde pone app/ poner el nombre que queramos ponerle a la base de datos
+	- Crear base de datos con doctrine -> symfony console d:d:c
+	- Si nos metemos en PHPMyAdmin, veremos que se ha creado nuestra base de datos, vacia
+
+--- CREAR Y ACTUALIZAR ENTIDADES (tablas en la bbdd) ---
+	- Comando para crear entidad -> symfony console make:entity
+	- Comando para subir migracion -> symfony console make:migration
+	- Comando para subir todas las migraciones -> symfony console doctrine:migrations:migrate
+	- Para relacionar dos tablas entre si seguimos estos pasos:
+		- Primero hacemos symfony console make:entity, seleccionamos la tabla existente en la que vamos a añadir el campo para relacionar con la otra tabla
+		- Una vez puesto el nombre del campo, en el paso del tipo de datos ponemos 'relation'
+		- En el siguiente paso indicamos la tabla con la que va a estar relacionada
+		- Y por ultimo le decimos la cardinalidad de la relacion (0:0,1:M,M:N, etc)
+		- Una vez creados la o las relacines, para subirlas a la base de datos ejecutamos los dos comando vistos anteriormente: symfony console make:migration  &  symfony console doctrine:migrations:migrate
+	
+--- CREAR Y ACTUALIZAR FIXTURES (campos de las tablas de la bbdd) ---
+	- Comando para instalar paquete de 'fixtures' en nuestro proyecto -> composer require orm-fixtures --dev
+	- Crear Fixture personalizado paso a paso:
+		- Comando para crear una fixture -> symfony console make:fixtures
+		- Poner nombre a nuestra Fixture personalizada (el que queramos, pero que tenga que ver con la fixture)
+		- Personalizar la fixture a nuestras necesidades, aqui un pequeño ejemplo:
+			(dentro de la function load)
+			$genre1 = new Genre();  //instanciamos una nueva variable de tipo Genre (Genre es una entidad)
+        		$genre1->setName('Action');  //ponemos un valor a nuestra variable
+        		$manager->persist($genre1);  //hacemos persist para subirla a la bbdd
+			(podemos añadir tantos 'generos' (en este caso), como queramos)
+
+			$manager->flush();
+
+		- Comando para subir todas las fixtures -> symfony console doctrine:fixtures:load
+
+--- DESCARGAR TAILWIND ---
+	- Ejecutamos estos comandos:
+		- composer require symfony/webpack-encore-bundle
+		- npm install -D tailwindcss postcss postcss-loader autoprefixer
+		- npx tailwindcss init -p
+	- En el archivo 'webpack.config.js', debajo de Encore, ponemos esta linea: .enablePostCssLoader()
+	- En el archivo 'tailwind.config.js', donde pone content: [... lo sustituimos por esto:
+		content: [
+    			"./assets/**/*.js",
+    			"./templates/**/*.html.twig",
+  		],
+	- En el archivo app.css, que esta en /assets/styles, ponemos esto al principio:
+		@tailwind base;
+		@tailwind components;
+		@tailwind utilities;
+	- En el archivo bootstrap.js, que esta en /assets, cambiamos lo que hay por esto:
+		import { startStimulusApp } from '@symfony/stimulus-bridge';
+		export const app = startStimulusApp(require.context(
+    			'@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+    			true,
+    			/\.(j|t)sx?$/
+		));
+	- Instalamos el paquete -> npm install @symfony/stimulus-bridge
+	- Al final del archivo webpack.config.js, justo encima de esta linea module.exports = Encore.getWebpackConfig(); ponemos esto:
+		const path = require('path');
+
+		// Configura tu proyecto Encore aquí...
+
+		// Agrega el alias para controllers.json
+		Encore.addAliases({
+    		'@symfony/stimulus-bridge/controllers.json': path.resolve(__dirname, './assets/controllers.json'),
+		});
+	- Ejecutar el comando yarn install --force
+	- Ejecutamos este comando npm install @hotwired/stimulus
+	- Ejecutamos este comando composer require symfony/ux-turbo
+	- El archivo controllers.json, que esta en la carpeta assets, lo dejamos tal que asi:
+		{
+    			"controllers": {},
+    			"entrypoints": []
+		}
+
+--- DESCARGAR TWIG ---
+	- Ejecutar comando composer require twig
+
+--- COGER DATOS DE LA BASE DE DATOS PARA MOSTRAR EN LA WEB ---
+	- En el archivo de MoviesController.php (en este caso) creamos lo siguiente:
+		public function __construct(private readonly EntityManagerInterface $entityManager)
+    		{
+    		}
+
+		(y dentro de la funcion index(), ponemos esto:)
+		$movies = $this->entityManager->getRepository(Movie::class)->findAll(); => ASI SE COGEN LOS DATOS DE LA BASE DE DATOS
+		(donde pone (Movie::class), ahi tendriamos que poner el nombre de la entidad (tabla) de la que queremos coger los datos)
+
+        	return $this->render('movies/index.html.twig', [
+            		'movies' => $movies,
+       	 	]);	
+		(y aqui se lo pasamos a la funcion index para poder utilizar y manejar las peliculas en el archivo index.html.twig, que va a ser nuestra pagina principal)
+
+	- En el archivo index.html.twig, podemos hacer algo asi para listar las peliculas como prueba:
+		{% extends "base.html.twig" %}
+		(esta linea tiene que estar en TODAS las pagina que creemos)
+
+		{% block title %}Hola Mundo{% endblock %}
+
+		{% block body %}
+    		{% for movie in movies %}
+       			<p>{{ movie.title }}</p>       
+    		{% endfor %}
+		{% endblock %}
+
+--- INSTALAR FONTAWESOME EN NUESTRO PROYECTO ---
+	- Ejecutar este comando -> npm install @fortawesome/fontawesome-free
+	- Añadir esta linea en el archivo assets/styles/app.css : @import '~@fortawesome/fontawesome-free/css/all.css';
+
+--- TRABAJAR CON FORMULARIOS EN SYMFONY ---
+	- Ejecutar este comando para descargar dependencia en nuestro proyecto -> composer require form
+	- Ejecutar este comando -> symfony console make:form
+
+
+
+
+
+
+
