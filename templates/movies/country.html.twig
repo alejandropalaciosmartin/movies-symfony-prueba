@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Countries{% endblock %}
+
+{% block body %}
+    <div class="bg-gray-900 py-16">
+        <div class="container mx-auto px-4">
+            <h1 class="text-6xl text-center text-white">
+                <i class="fa-solid fa-globe" style="color: #ffffff;"></i> Countries <i class="fa-solid fa-globe"></i>
+            </h1>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-center">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative">
+                <div class="px-6 py-4">
+
+                    <!-- Add Country Button -->
+                    <a href="{{ path('app_country_create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 flex items-center justify-center">
+                        <i class="fa-solid fa-plus" style="color: #ffffff;"></i>Add Country
+                    </a>
+                    {% if countries is empty %}
+                        <p class="text-gray-700 text-base">There are no countries in the database.
+                            <a href="#" class="text-blue-500">Add one</a>!
+                        </p>
+                    {% else %}
+                        <ul>
+                            {% for country in countries %}
+                                <li class="flex justify-between items-center mb-6">
+                                    <span>{{ country.name }}</span>
+
+                                    <!-- Edit Country Button -->
+                                    <a href="{{ path('app_country_delete', {'id': country.id}) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

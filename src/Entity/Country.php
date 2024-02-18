@@ -6,7 +6,9 @@ use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+#[UniqueEntity(fields: ['name'], message: 'Este nombre ya está en uso')]
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
 {
@@ -75,6 +77,6 @@ class Country
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 }

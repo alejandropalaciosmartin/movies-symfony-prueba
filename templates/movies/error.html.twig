@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Error{% endblock %}
+
+{% block body %}
+
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 20px;">
+        <div style="background-color: red; padding: 20px; color: white; text-align: center; border-radius: 5px; margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <span style="font-weight: bold;">ERROR:</span> The selected {{ entity }} could not be deleted as it is related to a movie.
+        </div>
+
+        <div>
+            <a href="{{ path('app_' ~ entity) }}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded text-decoration-none">
+                Back to {{ entity }}
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

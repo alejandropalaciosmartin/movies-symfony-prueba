@@ -17,15 +17,21 @@
             <a href="{{ path('app_movies') }}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
                 Movies
             </a>
+            <a href="{{ path('app_genres') }}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                Genres
+            </a>
+            <a href="{{ path('app_countries') }}" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+                Country
+            </a>
         </div>
         <div>
             <a href="{{ path('app_movie_create') }}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-200 hover:text-white mr-4">
                 Add Movie
             </a>
-            <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-200 hover:text-white mr-4">
+            <a href="{{ path('app_genre_create') }}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-200 hover:text-white mr-4">
                 Add Genres
             </a>
-            <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-200 hover:text-white mr-4">
+            <a href="{{ path('app_country_create') }}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-200 hover:text-white mr-4">
                 Add Country
             </a>
         </div>
