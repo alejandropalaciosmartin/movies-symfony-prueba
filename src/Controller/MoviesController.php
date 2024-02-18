@@ -10,13 +10,11 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\GenresType;
-use App\Controller\CountriesType;
-use App\Form\CountriesType as FormCountriesType;
+use App\Form\CountryType as FormCountryType;
 
 class MoviesController extends AbstractController
 {
@@ -160,7 +158,7 @@ class MoviesController extends AbstractController
     public function createCountry(Request $request): Response
     {
         $country = new Country();
-        $form = $this->createForm(FormCountriesType::class, $country);
+        $form = $this->createForm(FormCountryType::class, $country);
 
         $form->handleRequest($request);
 
